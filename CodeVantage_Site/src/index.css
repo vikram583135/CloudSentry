@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* General Reset */
 :root {
   --bg-color: #050505;
@@ -6,7 +10,7 @@
   --secondary-accent: #7000ff;
   --text-primary: #ffffff;
   --text-secondary: #a0a0a0;
-  --font-main: 'Roboto', sans-serif;
+  --font-main: 'Outfit', sans-serif;
 }
 
 * {
