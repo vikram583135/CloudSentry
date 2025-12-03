@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>Edit Question</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(120deg, #e3f2fd 0%, #bbdefb 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+        .main-container {
+            max-width: 600px;
+            margin: 60px auto;
+            background: #fff;
+            border-radius: 22px;
+            box-shadow: 0 8px 32px rgba(0, 123, 255, 0.13);
+            padding: 40px 32px 32px 32px;
+            position: relative;
+        }
+        .form-title {
+            font-family: 'Playfair Display', serif;
+            color: #007bff;
+            text-align: center;
+            margin-bottom: 28px;
+            font-size: 2.2rem;
+            letter-spacing: 1px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .form-label {
+            font-weight: 500;
+            color: #34495e;
+        }
+        .form-control, .form-select {
+            border-radius: 8px;
+            border: 1px solid #b0bec5;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            font-size: 1.05rem;
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 2px #bbdefb;
+        }
+        .btn-group-custom {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+        .btn-primary {
+            background: linear-gradient(90deg, #007bff 60%, #42a5f5 100%);
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            padding: 10px 32px;
+            font-size: 1.1rem;
+            transition: background 0.3s, box-shadow 0.3s;
+            box-shadow: 0 2px 8px rgba(0,123,255,0.08);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(90deg, #0056b3 60%, #1976d2 100%);
+            color: #fff;
+            box-shadow: 0 4px 16px rgba(0,123,255,0.13);
+        }
+        .btn-secondary {
+            background: #6c757d;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            padding: 10px 32px;
+            font-size: 1.1rem;
+            transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-secondary:hover {
+            background: #495057;
+            color: #fff;
+        }
+        .mb-3.text-end {
+            position: absolute;
+            top: 24px;
+            right: 32px;
+        }
+        .messages {
+            margin-bottom: 20px;
+            padding: 10px;
+            border-radius: 8px;
+            background-color: #f8d7da;
+            color: #721c24;
+            font-size: 1rem;
+        }
+        .messages.success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        @media (max-width: 700px) {
+            .main-container {
+                padding: 20px 8px 16px 8px;
+            }
+            .mb-3.text-end {
+                position: static;
+                margin-bottom: 10px;
+                text-align: right;
+            }
+            .form-title {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="main-container">
+    <div class="mb-3 text-end">
+        <a href="{% url 'index' %}" class="btn btn-outline-info"><i class="bi bi-house"></i> Home</a>
+    </div>
+    <div class="form-title"><i class="bi bi-pencil-square"></i> Edit Question</div>
+    {% if messages %}
+    <div class="messages {% for message in messages %}{{ message.tags }}{% endfor %}">
+        {% for message in messages %}
+        <div>{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    <form method="POST" autocomplete="off">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label class="form-label">Question</label>
+            <textarea name="question" class="form-control" rows="3" required>{{ question.question }}</textarea>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Subject Code</label>
+            <input type="text" name="subject_code" class="form-control" value="{{ question.subject_code }}" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Marks</label>
+            <input type="number" name="marks" class="form-control" value="{{ question.marks }}" min="1" max="100" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Year</label>
+            <input type="number" name="year" class="form-control" value="{{ question.year }}" min="1" max="4" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Unit</label>
+            <input type="number" name="unit" class="form-control" value="{{ question.unit }}" min="1" max="10" required>
+        </div>
+        <div class="mb-3">
+            <label for="subject" class="form-label">Subject</label>
+            <select name="subject" id="subject" class="form-select" required>
+                <option value="" disabled>Select Subject</option>
+                <option value="Database Management system" {% if question.subject == "Database Management system" %}selected{% endif %}>DBMS</option>
+                <option value="Computer Organization and Architecture" {% if question.subject == "Computer Organization and Architecture" %}selected{% endif %}>COA</option>
+                <option value="Softcore" {% if question.subject == "Softcore" %}selected{% endif %}>Softcore</option>
+                <option value="Cloud Computing" {% if question.subject == "Cloud Computing" %}selected{% endif %}>Cloud Computing</option>
+                <option value="Research Methodology" {% if question.subject == "Research Methodology" %}selected{% endif %}>Research Methodology</option>
+                <option value="Data Mining" {% if question.subject == "Data Mining" %}selected{% endif %}>DM</option>
+            </select>
+        </div>
+        <div class="btn-group-custom mt-4">
+            <button type="submit" class="btn btn-primary px-4"><i class="bi bi-save"></i> Save Changes</button>
+            <a href="{% url 'view_questions' %}" class="btn btn-secondary px-4"><i class="bi bi-x-circle"></i> Cancel</a>
+        </div>
+    </form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

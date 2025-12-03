@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }} Paper</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #fff;
+            color: #222;
+            font-size: 15px;
+            margin: 0;
+            padding: 0;
+        }
+        .paper-container {
+            max-width: 900px;
+            margin: 30px auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(60,60,60,0.10);
+            padding: 28px 24px 24px 24px;
+        }
+        .header-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 18px;
+        }
+        .header-table th, .header-table td {
+            border: none;
+            text-align: center;
+            vertical-align: middle;
+            padding: 0;
+        }
+        .header-logo {
+            width: 100px;
+            height: 100px;
+            border-radius: 10px;
+            object-fit: contain;
+        }
+        .header-title {
+            font-size: 1.4rem;
+            color: #111;
+            font-weight: bold;
+            margin-bottom: 2px;
+        }
+        .header-subtitle {
+            color: #444;
+            font-size: 1rem;
+            margin-bottom: 2px;
+        }
+        .header-record {
+            font-size: 0.95rem;
+            color: #444;
+            font-weight: 500;
+        }
+        .info-table, .details-table {
+            width: 100%;
+            margin-bottom: 10px;
+            border-collapse: collapse;
+        }
+        .info-table th, .info-table td,
+        .details-table th, .details-table td {
+            padding: 6px 8px;
+            border: none;
+            font-size: 0.98rem;
+        }
+        .info-table th {
+            color: #111;
+            font-weight: 600;
+            text-align: left;
+            white-space: nowrap;
+        }
+        .info-table td {
+            color: #222;
+            text-align: left;
+            white-space: nowrap;
+        }
+        .details-table td {
+            vertical-align: top;
+            padding: 6px 8px;
+            white-space: nowrap;
+        }
+        hr {
+            border: none;
+            border-top: 2px solid #bbb;
+            margin: 14px 0;
+        }
+        .note {
+            background: #f6f6f6;
+            border-left: 4px solid #222;
+            padding: 10px 16px;
+            margin-bottom: 16px;
+            font-size: 0.98rem;
+            color: #333;
+        }
+        .question-section {
+            background: #f8f8f8;
+            border-radius: 8px;
+            box-shadow: 0 1px 4px rgba(60,60,60,0.04);
+            margin-bottom: 14px;
+            padding: 14px 14px 8px 14px;
+        }
+        .question-section h3 {
+            color: #111;
+            font-size: 1.05rem;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+            text-align: left;
+        }
+        .question-item {
+            padding: 6px 0;
+            border-bottom: 1px dashed #bbb;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .question-item b {
+            margin-right: 6px;
+        }
+        .marks-badge,
+        .question-item span[style] {
+            background: #222 !important;
+            color: #fff !important;
+            border-radius: 5px;
+            padding: 2px 10px;
+            font-size: 0.93rem;
+            margin-left: 10px;
+            min-width: 70px;
+            text-align: center;
+            font-weight: 600;
+        }
+        .end-line {
+            text-align: center;
+            color: #444;
+            font-size: 1.05rem;
+            margin-top: 24px;
+            letter-spacing: 2px;
+        }
+        @page {
+            size: A4;
+            margin: 20mm 15mm 20mm 15mm;
+        }
+        @media print {
+            body {
+                background: #fff !important;
+            }
+            .paper-container {
+                box-shadow: none !important;
+                border-radius: 0 !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            .end-line {
+                color: #444 !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="paper-container">
+        <table class="header-table">
+            <tr>
+                <td style="width:100px">
+                    {% load static %}
+                    <img class="header-logo" src="{% static 'images/logo.png' %}" alt="Logo"/>
+                </td>
+                <td>
+                    <div class="header-title">
+                        {% if term %}
+                        {{ term }} Semester 
+                        {% endif %}
+                        M.C.A Examination,
+                        {% if ayear %}
+                        {{ ayear }}
+                        {% endif %}
+                    </div>
+                    <div class="header-title">(CBCS) (2020-21 and onwards)</div>
+                    <div class="header-title">
+                        {% if div %}
+                        {{ div }}
+                        {% endif %}
+                    </div>
+                    <div class="header-title">
+                        {% if sub %}
+                        {{ sub }}
+                        {% endif %}
+                    </div>
+                </td>
+                
+                <td style="width:100px">
+                    <div class="header-record"><br><b>PG-511</b></div>
+                </td>
+            </tr>
+        </table>
+        <div style="margin-bottom: 6px;">
+            <span><b>Time:</b> {{ ttime }}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><b>Maximum Marks:</b> {{ max_marks_input }}</span>
+        </div>
+        <div class="note" style="margin-bottom: 16px;">
+            <span><b> Instructions: </b></span>
+            <span>
+                {% if nq1 %}Answer any {{ nq1 }} from section A {% endif %}
+                {% if nq2 %}and any {{ nq2 }} from section B {% endif %}
+                {% if nq3 %}and any {{ nq3 }} from section C {% endif %}
+                {% if nq4 %}and any {{ nq4 }} from section D {% endif %}
+                {% if nq5 %}and any {{ nq5 }} from section E{% endif %}
+            </span>
+        </div>
+        <!-- Section 1 -->
+        {% if fquestions1 %}
+        <div class="question-section">
+            <h3>
+                <h3>Section A</h3>
+                Answer any {{ nq1 }} questions &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                {% if nq1 and marks1 %}
+                    <span style="font-weight:normal; font-size:1rem;"><b>({{ nq1 }} &times; {{ marks1 }} = {{ main1_total }})</b></span>
+                {% endif %}
+            </h3>
+            {% for question, label in fquestions1 %}
+            <div class="question-item" style="display: block; margin-bottom: 10px;">
+                <span>
+                    <b>{{ forloop.counter }}.</b> {{ question.question }} <b>({{ question.marks }} Marks)</b>
+                </span>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        <!-- Section 2 -->
+        {% if fquestions2 %}
+        <div class="question-section">
+            <h3>
+                <h3>Section B</h3>
+                Answer any {{ nq2 }} questions &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                {% if nq2 and marks2 %}
+                    <span style="font-weight:normal; font-size:1rem;"><b>({{ nq2 }} &times; {{ marks2 }} = {{ main2_total }})</b></span>
+                {% endif %}
+            </h3>
+            {% for question, label in fquestions2 %}
+            <div class="question-item" style="display: block; margin-bottom: 10px;">
+                <span>
+                    <b>{{ forloop.counter }}.</b> {{ question.question }} <b>({{ question.marks }} Marks)</b>
+                </span>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        <!-- Section 3 -->
+        {% if fquestions3 %}
+        <div class="question-section">
+           <h3>
+                <h3>Section C</h3>
+                Answer any {{ nq3 }} questions &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                {% if nq3 and marks3 %}
+                    <span style="font-weight:normal; font-size:1rem;"><b>({{ nq3 }} &times; {{ marks3 }} = {{ main3_total }})</b></span>
+                {% endif %}
+            </h3>
+            {% for question, label in fquestions3 %}
+            <div class="question-item" style="display: block; margin-bottom: 10px;">
+                <span>
+                    <b>{{ forloop.counter }}.</b> {{ question.question }} <b>({{ question.marks }} Marks)</b>
+                </span>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        <!-- Section 4 -->
+        {% if fquestions4 %}
+        <div class="question-section">
+          <h3>
+                <h3>Section D</h3>
+                Answer any {{ nq4 }} questions &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                {% if nq4 and marks4 %}
+                    <span style="font-weight:normal; font-size:1rem;"><b>({{ nq4 }} &times; {{ marks4 }} = {{ main4_total }})</b></span>
+                {% endif %}
+            </h3>
+            {% for question, label in fquestions4 %}
+            <div class="question-item" style="display: block; margin-bottom: 10px;">
+                <span>
+                    <b>{{ forloop.counter }}.</b> {{ question.question }} <b>({{ question.marks }} Marks)</b>
+                </span>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        <!-- Section 5 -->
+        {% if fquestions5 %}
+        <div class="question-section">
+            <h3>
+                <h3>Section E</h3>
+                Answer any {{ nq5 }} questions &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                {% if nq5 and marks5 %}
+                    <span style="font-weight:normal; font-size:1rem;"><b>({{ nq5 }} &times; {{ marks5 }} = {{ main5_total }})</b></span>
+                {% endif %}
+            </h3>
+            {% for question, label in fquestions5 %}
+            <div class="question-item" style="display: block; margin-bottom: 10px;">
+                <span>
+                    <b>{{ forloop.counter }}.</b> {{ question.question }} <b>({{ question.marks }} Marks)</b>
+                </span>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        <div class="end-line">
+<hr>
+        </div>
+    </div>
+</body>
+</html>
