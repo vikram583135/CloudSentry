@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}Interview Management{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <h2 class="mb-4">All Scheduled Interviews</h2>
+
+  {% if interviews %}
+    <table class="table table-bordered table-striped">
+      <thead class="table-light">
+        <tr>
+          <th>Candidate</th>
+          <th>Company</th>
+          <th>Job Title</th>
+          <th>Scheduled Date</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for interview in interviews %}
+          <tr>
+            <td>{{ interview.application.student.user.get_full_name }}</td>
+            <td>{{ interview.application.job.company.name }}</td>
+            <td>{{ interview.application.job.title }}</td>
+            <td>{{ interview.date_time }}</td>
+            <td>{{ interview.status }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No interviews scheduled.</p>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block title %}Job Listings{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <h2 class="mb-4">Available Job Openings</h2>
+
+  <form method="get" class="row g-3 mb-3">
+    <div class="col-md-4">
+      <input type="text" name="search" value="{{ request.GET.search }}" class="form-control" placeholder="Search by job title or company...">
+    </div>
+    <div class="col-md-2">
+      <button type="submit" class="btn btn-outline-primary">Search</button>
+    </div>
+  </form>
+
+  <table class="table table-bordered table-striped align-middle">
+    <thead class="table-light">
+      <tr>
+        <th>Company</th>
+        <th>Job Title</th>
+        <th>CTC</th>
+        <th>CGPA Required</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for job in jobs %}
+      <tr>
+        <td>{{ job.company.name }}</td>
+        <td>{{ job.title }}</td>
+        <td>{{ job.ctc }}</td>
+        <td>{{ job.cgpa_required }}</td>
+        <td>
+          <a href="{% url 'job_detail' job.id %}" class="btn btn-sm btn-info">View</a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="5" class="text-center text-muted">No job postings available currently.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

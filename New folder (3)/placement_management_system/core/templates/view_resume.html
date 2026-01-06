@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}View Resume{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <h2 class="mb-4">Resume of {{ student.user.get_full_name }}</h2>
+
+  <div class="mb-3">
+    <p><strong>Branch:</strong> {{ student.branch }}</p>
+    <p><strong>CGPA:</strong> {{ student.cgpa }}</p>
+    <p><strong>Email:</strong> {{ student.user.email }}</p>
+  </div>
+
+  {% if student.resume %}
+    <div class="embed-responsive embed-responsive-16by9" style="height: 600px;">
+      <iframe class="embed-responsive-item w-100 h-100 border" src="{{ student.resume.url }}"></iframe>
+    </div>
+    <a href="{{ student.resume.url }}" class="btn btn-success mt-3" download>
+      <i class="bi bi-download"></i> Download Resume
+    </a>
+  {% else %}
+    <div class="alert alert-warning mt-4">
+      Resume not uploaded by the student.
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

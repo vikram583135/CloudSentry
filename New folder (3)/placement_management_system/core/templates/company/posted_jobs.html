@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}Posted Jobs{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <h2 class="mb-4">Your Posted Jobs</h2>
+
+  {% if jobs %}
+    <table class="table table-bordered table-hover">
+      <thead class="table-light">
+        <tr>
+          <th>Title</th>
+          <th>Posted On</th>
+          <th>Eligibility</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for job in jobs %}
+          <tr>
+            <td>{{ job.title }}</td>
+            <td>{{ job.posted_date }}</td>
+            <td>CGPA: {{ job.min_cgpa }}, Branch: {{ job.branch }}, Backlogs: {{ job.max_backlogs }}</td>
+            <td>
+              <a href="{% url 'job_applicants' job.id %}" class="btn btn-sm btn-primary">View Applicants</a>
+              <a href="{% url 'edit_job' job.id %}" class="btn btn-sm btn-warning">Edit</a>
+              <a href="{% url 'delete_job' job.id %}" class="btn btn-sm btn-danger">Delete</a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No jobs posted yet.</p>
+  {% endif %}
+</div>
+{% endblock %}

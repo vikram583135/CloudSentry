@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}Student Dashboard{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <h2 class="mb-4">Welcome, {{ user.first_name }}!</h2>
+  <div class="row text-center g-4">
+    <div class="col-md-4">
+      <div class="card shadow-sm border-0">
+        <div class="card-body">
+          <h5 class="card-title">Applied Jobs</h5>
+          <h3 class="text-primary">{{ applied_count }}</h3>
+          <a href="{% url 'applied_jobs' %}" class="btn btn-primary btn-sm mt-2">View</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card shadow-sm border-0">
+        <div class="card-body">
+          <h5 class="card-title">Interviews Scheduled</h5>
+          <h3 class="text-warning">{{ interviews_count }}</h3>
+          <a href="{% url 'interview_schedule' %}" class="btn btn-warning btn-sm mt-2">Check</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card shadow-sm border-0">
+        <div class="card-body">
+          <h5 class="card-title">Placement Status</h5>
+          <h3 class="text-success">{{ placement_status }}</h3>
+          <a href="{% url 'placement_status' %}" class="btn btn-success btn-sm mt-2">Details</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block title %}Admin Dashboard{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <h2 class="mb-4">Admin Dashboard</h2>
+  <div class="row g-4">
+    <div class="col-md-3">
+      <div class="card text-white bg-primary h-100">
+        <div class="card-body">
+          <h5 class="card-title">Total Students</h5>
+          <p class="card-text display-6">{{ total_students }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-white bg-success h-100">
+        <div class="card-body">
+          <h5 class="card-title">Total Companies</h5>
+          <p class="card-text display-6">{{ total_companies }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-white bg-warning h-100">
+        <div class="card-body">
+          <h5 class="card-title">Placed Students</h5>
+          <p class="card-text display-6">{{ placed_students }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-white bg-danger h-100">
+        <div class="card-body">
+          <h5 class="card-title">Open Job Posts</h5>
+          <p class="card-text display-6">{{ open_jobs }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-5">
+    <canvas id="placementChart" height="100"></canvas>
+  </div>
+</div>
+
+<script>
+  const ctx = document.getElementById('placementChart');
+  const placementChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: {{ chart_labels|safe }},
+      datasets: [{
+        label: 'Applications per Company',
+        data: {{ chart_data|safe }},
+        backgroundColor: 'rgba(54, 162, 235, 0.7)'
+      }]
+    }
+  });
+</script>
+{% endblock %}

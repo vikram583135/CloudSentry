@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}Job Detail{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <h2 class="mb-3">{{ job.title }}</h2>
+
+  <div class="mb-3">
+    <strong>Company:</strong> {{ job.company.name }}<br>
+    <strong>Location:</strong> {{ job.location }}<br>
+    <strong>CTC:</strong> ₹{{ job.ctc }}<br>
+    <strong>CGPA Required:</strong> {{ job.cgpa_required }}<br>
+    <strong>Max Backlogs Allowed:</strong> {{ job.max_backlogs }}<br>
+  </div>
+
+  <div class="mb-4">
+    <strong>Description:</strong>
+    <p class="mt-2">{{ job.description|linebreaks }}</p>
+  </div>
+
+  {% if already_applied %}
+    <form method="post">
+      {% csrf_token %}
+      <button type="submit" name="withdraw" class="btn btn-danger">Withdraw Application</button>
+    </form>
+  {% elif is_eligible %}
+    <form method="post">
+      {% csrf_token %}
+      <button type="submit" name="apply" class="btn btn-success">Apply Now</button>
+    </form>
+  {% else %}
+    <div class="alert alert-warning">
+      You are not eligible for this job based on your profile.
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

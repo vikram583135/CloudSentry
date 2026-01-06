@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %}Approve Job Postings{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <h2 class="mb-4">Pending Job Post Approvals</h2>
+
+  {% if jobs %}
+    <table class="table table-hover table-bordered">
+      <thead class="table-light">
+        <tr>
+          <th>Company</th>
+          <th>Job Title</th>
+          <th>Posted On</th>
+          <th>Eligibility</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for job in jobs %}
+          <tr>
+            <td>{{ job.company.name }}</td>
+            <td>{{ job.title }}</td>
+            <td>{{ job.posted_date }}</td>
+            <td>CGPA: {{ job.min_cgpa }}, Branch: {{ job.branch }}</td>
+            <td>
+              <a href="{% url 'approve_job' job.id %}" class="btn btn-sm btn-success">Approve</a>
+              <a href="{% url 'reject_job' job.id %}" class="btn btn-sm btn-danger">Reject</a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No job postings awaiting approval.</p>
+  {% endif %}
+</div>
+{% endblock %}

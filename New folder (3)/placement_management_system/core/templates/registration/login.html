@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h3 class="text-center mb-4">Login</h3>
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+            <form method="post" novalidate>
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username or Email</label>
+                    <input type="text" name="username" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" name="password" class="form-control" required>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <a href="{% url 'password_reset' %}">Forgot Password?</a>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </div>
+            </form>
+            <div class="mt-4 text-center">
+                <p>Don't have an account? Register as:</p>
+                <a href="{% url 'register_student' %}" class="btn btn-outline-success btn-sm mx-1">Student</a>
+                <a href="{% url 'register_company' %}" class="btn btn-outline-info btn-sm mx-1">Company</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

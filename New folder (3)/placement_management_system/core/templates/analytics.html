@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Placement Analytics{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <h2 class="mb-4 text-center">Placement Analytics Dashboard</h2>
+
+  <div class="row">
+    <!-- Pie Chart: Placement Status -->
+    <div class="col-md-6 mb-4">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Placement Status</h5>
+          <canvas id="placementStatusChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bar Chart: Applications per Company -->
+    <div class="col-md-6 mb-4">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Applications Per Company</h5>
+          <canvas id="applicationsChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <!-- Line Chart: CGPA Distribution -->
+    <div class="col-md-12 mb-4">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">CGPA Distribution</h5>
+          <canvas id="cgpaChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  // Placement Status Chart
+  const placementStatusChart = new Chart(document.getElementById('placementStatusChart'), {
+    type: 'pie',
+    data: {
+      labels: ['Placed', 'Not Placed', 'In Process'],
+      datasets: [{
+        data: [120, 50, 30],
+        backgroundColor: ['#4CAF50', '#F44336', '#FFC107']
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'bottom'
+        }
+      }
+    }
+  });
+
+  // Applications Per Company Chart
+  const applicationsChart = new Chart(document.getElementById('applicationsChart'), {
+    type: 'bar',
+    data: {
+      labels: ['Infosys', 'TCS', 'Wipro', 'Google', 'Amazon'],
+      datasets: [{
+        label: 'Applications',
+        data: [70, 85, 60, 40, 50],
+        backgroundColor: '#2196F3'
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+  // CGPA Distribution Line Chart
+  const cgpaChart = new Chart(document.getElementById('cgpaChart'), {
+    type: 'line',
+    data: {
+      labels: ['5.0', '6.0', '7.0', '8.0', '9.0', '10.0'],
+      datasets: [{
+        label: 'Number of Students',
+        data: [5, 10, 20, 40, 25, 15],
+        fill: false,
+        borderColor: '#673AB7',
+        tension: 0.4
+      }]
+    },
+    options: {
+      responsive: true
+    }
+  });
+</script>
+{% endblock %}

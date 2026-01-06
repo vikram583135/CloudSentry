@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}My Profile{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <h2 class="mb-4">Edit My Profile</h2>
+  <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success mt-2">Update Profile</button>
+  </form>
+</div>
+{% endblock %}

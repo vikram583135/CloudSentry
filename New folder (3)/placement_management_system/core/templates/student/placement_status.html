@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Placement Status{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <h2 class="mb-4">My Placement Status</h2>
+
+  {% if placement %}
+    <div class="alert alert-success">
+      🎉 Congratulations! You are placed.
+    </div>
+    <ul class="list-group">
+      <li class="list-group-item"><strong>Company:</strong> {{ placement.company.name }}</li>
+      <li class="list-group-item"><strong>Job Title:</strong> {{ placement.job.title }}</li>
+      <li class="list-group-item"><strong>Status:</strong> {{ placement.status }}</li>
+    </ul>
+  {% else %}
+    <div class="alert alert-info">
+      You have not been placed yet.
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

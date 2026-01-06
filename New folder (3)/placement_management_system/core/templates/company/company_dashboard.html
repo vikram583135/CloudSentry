@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %}Company Dashboard{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <h2 class="mb-4">Welcome, {{ user.companyprofile.name }}</h2>
+
+  <div class="row g-4 text-center">
+    <div class="col-md-4">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Total Jobs Posted</h5>
+          <h3 class="text-primary">{{ total_jobs }}</h3>
+          <a href="{% url 'posted_jobs' %}" class="btn btn-outline-primary btn-sm mt-2">View Jobs</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Total Applicants</h5>
+          <h3 class="text-warning">{{ total_applicants }}</h3>
+          <a href="{% url 'job_applicants_overview' %}" class="btn btn-outline-warning btn-sm mt-2">View Applicants</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Interviews Scheduled</h5>
+          <h3 class="text-success">{{ interviews_scheduled }}</h3>
+          <a href="{% url 'schedule_interview' %}" class="btn btn-outline-success btn-sm mt-2">Manage Interviews</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

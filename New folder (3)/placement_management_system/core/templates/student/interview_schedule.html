@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}Interview Schedule{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <h2 class="mb-4">My Interview Schedule</h2>
+
+  <table class="table table-bordered table-striped">
+    <thead class="table-light">
+      <tr>
+        <th>Company</th>
+        <th>Job Title</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Mode</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for interview in interviews %}
+      <tr>
+        <td>{{ interview.job.company.name }}</td>
+        <td>{{ interview.job.title }}</td>
+        <td>{{ interview.date }}</td>
+        <td>{{ interview.time }}</td>
+        <td>{{ interview.mode }}</td>
+        <td><span class="badge bg-{{ interview.status|lower|yesno:'success,warning,secondary' }}">{{ interview.status }}</span></td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="6" class="text-center text-muted">No interviews scheduled yet.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

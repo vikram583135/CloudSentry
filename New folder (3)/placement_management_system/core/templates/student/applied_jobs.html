@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}Applied Jobs{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <h2 class="mb-4">My Applications</h2>
+
+  <table class="table table-hover table-bordered">
+    <thead class="table-light">
+      <tr>
+        <th>Company</th>
+        <th>Job Title</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for app in applications %}
+      <tr>
+        <td>{{ app.job.company.name }}</td>
+        <td>{{ app.job.title }}</td>
+        <td><span class="badge bg-info text-dark">{{ app.status }}</span></td>
+        <td><a href="{% url 'job_detail' app.job.id %}" class="btn btn-sm btn-outline-secondary">View</a></td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="4" class="text-center text-muted">You haven't applied to any jobs yet.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

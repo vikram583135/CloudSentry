@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}Job Applicants{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <h2 class="mb-4">Applicants for {{ job.title }}</h2>
+
+  {% if applicants %}
+    <table class="table table-striped table-bordered">
+      <thead class="table-dark">
+        <tr>
+          <th>Name</th>
+          <th>CGPA</th>
+          <th>Branch</th>
+          <th>Resume</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for app in applicants %}
+          <tr>
+            <td>{{ app.student.user.get_full_name }}</td>
+            <td>{{ app.student.cgpa }}</td>
+            <td>{{ app.student.branch }}</td>
+            <td><a href="{{ app.student.resume.url }}" class="btn btn-sm btn-outline-info" target="_blank">View</a></td>
+            <td>{{ app.status }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No applicants found for this job.</p>
+  {% endif %}
+</div>
+{% endblock %}
