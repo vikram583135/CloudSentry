@@ -29,13 +29,13 @@ const DynamicTitle = () => {
 
   useEffect(() => {
     const titles = {
-      '/': 'CodeVantage - Custom Software & Academic Projects',
-      '/projects': 'Top Final Year Projects 2025 - CodeVantage',
-      '/about': 'About Us - CodeVantage',
-      '/services': 'Our Services - CodeVantage',
-      '/contact': 'Contact Us - CodeVantage'
+      '/': 'codeWINtage - Custom Software & Academic Projects',
+      '/projects': 'Top Final Year Projects 2025 - codeWINtage',
+      '/about': 'About Us - codeWINtage',
+      '/services': 'Our Services - codeWINtage',
+      '/contact': 'Contact Us - codeWINtage'
     };
-    document.title = titles[location.pathname] || 'CodeVantage';
+    document.title = titles[location.pathname] || 'codeWINtage';
   }, [location]);
 
   return null;
@@ -107,7 +107,7 @@ function App() {
 
       {/* Floating WhatsApp Button */}
       <a
-        href="https://wa.me/919606578966?text=Hi%20CodeVantage,%20I'm%20interested%20in%20a%20project..."
+        href="https://wa.me/919606578966?text=Hi%20codeWINtage,%20I'm%20interested%20in%20a%20project..."
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-6 right-6 z-50 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 transition-all hover:scale-110 flex items-center justify-center"

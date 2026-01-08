@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import WLogo from './WLogo';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -47,13 +48,18 @@ const Navbar = () => {
         >
           <Link
             to="/"
-            className="text-3xl font-extrabold tracking-tight bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent hover:scale-105 transition-transform duration-300"
-            style={{
-              textShadow: '0 0 30px rgba(0, 212, 255, 0.3)',
-              letterSpacing: '-0.5px'
-            }}
+            className="flex items-center gap-2 hover:scale-105 transition-transform duration-300"
           >
-            CodeVantage
+            <WLogo size={42} className="drop-shadow-lg" />
+            <span
+              className="text-2xl font-extrabold tracking-tight bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent hidden sm:inline"
+              style={{
+                textShadow: '0 0 30px rgba(0, 212, 255, 0.3)',
+                letterSpacing: '-0.5px'
+              }}
+            >
+              codeWINtage
+            </span>
           </Link>
         </motion.div>
 
@@ -79,8 +85,8 @@ const Navbar = () => {
               <Link
                 to={link.path}
                 className={`text-base font-medium transition-all duration-300 relative group ${location.pathname === link.path
-                    ? 'text-white'
-                    : 'text-gray-300 hover:text-white'
+                  ? 'text-white'
+                  : 'text-gray-300 hover:text-white'
                   }`}
                 style={{
                   textShadow: location.pathname === link.path ? '0 0 10px rgba(0, 212, 255, 0.5)' : 'none'
@@ -134,8 +140,8 @@ const Navbar = () => {
                     to={link.path}
                     onClick={() => setIsOpen(false)}
                     className={`block text-lg font-medium transition-all ${location.pathname === link.path
-                        ? 'text-white px-4 py-2 rounded-lg border-l-2 border-cyan-400'
-                        : 'text-gray-300 hover:text-white px-4 py-2'
+                      ? 'text-white px-4 py-2 rounded-lg border-l-2 border-cyan-400'
+                      : 'text-gray-300 hover:text-white px-4 py-2'
                       }`}
                     style={{
                       background: location.pathname === link.path
