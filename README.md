@@ -1,37 +1,71 @@
-# AI-Powered Smart DevOps Incident & Cost Optimization Platform
+<p align="center">
+  <h1 align="center">☁️ CloudSentry</h1>
+  <p align="center">
+    <strong>AI-Powered Smart DevOps Incident & Cost Optimization Platform</strong>
+  </p>
+  <p align="center">
+    A production-grade observability and cost optimization platform combining features of <b>Datadog + AWS Cost Explorer + PagerDuty</b> with AI-powered insights.
+  </p>
+  <p align="center">
+    <a href="https://github.com/vikram583135/CloudSentry">
+      <img src="https://img.shields.io/badge/GitHub-CloudSentry-181717?logo=github" alt="GitHub Repo" />
+    </a>
+    <img src="https://img.shields.io/badge/Java-17+-ED8B00?logo=openjdk&logoColor=white" alt="Java" />
+    <img src="https://img.shields.io/badge/Spring%20Boot-3.2-6DB33F?logo=springboot&logoColor=white" alt="Spring Boot" />
+    <img src="https://img.shields.io/badge/PostgreSQL-15-4169E1?logo=postgresql&logoColor=white" alt="PostgreSQL" />
+    <img src="https://img.shields.io/badge/Apache%20Kafka-7.5-231F20?logo=apachekafka&logoColor=white" alt="Kafka" />
+    <img src="https://img.shields.io/badge/Redis-7-DC382D?logo=redis&logoColor=white" alt="Redis" />
+    <img src="https://img.shields.io/badge/License-MIT-yellow?logo=opensourceinitiative&logoColor=white" alt="License" />
+  </p>
+</p>
 
-> A production-grade observability and cost optimization platform combining features of **Datadog + AWS Cost Explorer + PagerDuty** with AI-powered insights.
+---
 
-![Java](https://img.shields.io/badge/Java-17+-orange)
-![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2-green)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-blue)
-![Kafka](https://img.shields.io/badge/Kafka-7.5-black)
-![Redis](https://img.shields.io/badge/Redis-7-red)
-![License](https://img.shields.io/badge/License-MIT-yellow)
+## 📖 Table of Contents
+
+- [Features](#-features)
+- [Architecture](#️-architecture)
+- [Tech Stack](#-tech-stack)
+- [Getting Started](#-getting-started)
+- [API Documentation](#-api-documentation)
+- [Project Structure](#-project-structure)
+- [Configuration](#-configuration)
+- [Testing](#-testing)
+- [Contributing](#-contributing)
+- [License](#-license)
+
+---
 
 ## 🎯 Features
 
 ### Core Capabilities
-- **Real-time Metrics Ingestion** - CPU, Memory, Latency, Error rate tracking
-- **Anomaly Detection Engine** - Statistical + Rule-based detection with prediction
-- **Incident Auto-Creation** - Automatic incident creation with severity calculation
-- **AI Root Cause Assistant** - Intelligent suggestions using rules + optional LLM
-- **Cloud Cost Analyzer** - AWS cost tracking and optimization suggestions
-- **Smart Alerting** - Deduplication, escalation, and multi-channel notifications
 
-### Dashboards (Role-Based)
-| Role | Access |
-|------|--------|
-| **Admin** | All metrics, user management, system config |
-| **SRE** | Incident management, on-call, alert tuning |
-| **Developer** | App metrics, deployment correlation, error logs |
-| **Manager** | Cost analytics, SLA reports, incident trends |
+| Module | Description |
+|--------|-------------|
+| **Metrics Ingestion** | Real-time tracking of CPU, Memory, Latency, and Error rates via Kafka streams |
+| **Anomaly Detection** | Statistical + Rule-based anomaly detection engine with predictive analysis |
+| **Incident Management** | Automatic incident creation with intelligent severity calculation and lifecycle tracking |
+| **AI Root Cause Analysis** | Intelligent RCA suggestions using a configurable rule engine and optional LLM integration |
+| **Cloud Cost Analyzer** | AWS cost tracking, resource utilization monitoring, and optimization recommendations |
+| **Notification Engine** | Multi-channel alerting (Email, Slack, Webhook) with deduplication and escalation policies |
+| **Role-Based Dashboards** | Aggregated views tailored for Admin, SRE, Developer, and Manager personas |
+
+### Dashboards (Role-Based Access)
+
+| Role | Dashboard Highlights |
+|------|----------------------|
+| **Admin** | System-wide metrics, user management, platform configuration |
+| **SRE** | Active incidents, on-call management, alert tuning, anomaly trends |
+| **Developer** | Application metrics, deployment correlation, error logs, RCA insights |
+| **Manager** | Cost analytics, SLA reports, incident trends, budget forecasts |
+
+---
 
 ## 🏗️ Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                      API Gateway (Spring Cloud)                  │
+│                     API Gateway (Spring Cloud)                  │
 └─────────────────────────────────────────────────────────────────┘
                                   │
                     ┌─────────────┼─────────────┐
@@ -42,160 +76,283 @@
               └──────────┘ └────┬─────┘ └──────────────┘
                                 │
                          ┌──────▼──────┐
-                         │    Kafka    │
+                         │  Apache     │
+                         │  Kafka      │
                          └──────┬──────┘
                                 │
                     ┌───────────┼───────────┐
                     ▼           ▼           ▼
               ┌──────────┐ ┌──────────┐ ┌──────────────┐
-              │ Analyzer │ │ Incident │ │ Notification │
-              │ Service  │ │ Service  │ │   Engine     │
+              │ Anomaly  │ │ Incident │ │ Notification │
+              │ Detector │ │ Manager  │ │   Engine     │
               └──────────┘ └────┬─────┘ └──────────────┘
                                 │
-                         ┌──────▼──────┐
-                         │  Root Cause │
-                         │  Assistant  │
-                         └─────────────┘
+                    ┌───────────┼───────────┐
+                    ▼                       ▼
+              ┌─────────────┐       ┌─────────────┐
+              │  Root Cause │       │  Dashboard  │
+              │  Analysis   │       │   Service   │
+              └─────────────┘       └─────────────┘
 ```
 
-## 🚀 Quick Start
+---
+
+## 🧰 Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| **Language** | Java 17 |
+| **Framework** | Spring Boot 3.2, Spring Cloud 2023.0 |
+| **Security** | Spring Security, JWT (jjwt 0.12.3) |
+| **Database** | PostgreSQL 15, Spring Data JPA |
+| **Cache** | Redis 7 |
+| **Messaging** | Apache Kafka (Spring Kafka) |
+| **Cloud** | AWS SDK v2 (Cost Explorer, EC2) |
+| **API Docs** | SpringDoc OpenAPI (Swagger UI) |
+| **Monitoring** | Micrometer + Prometheus |
+| **Build** | Maven, Docker Compose |
+| **Testing** | JUnit 5, Testcontainers, Spring Security Test |
+
+---
+
+## 🚀 Getting Started
 
 ### Prerequisites
-- Java 17+
-- Maven 3.8+
-- Docker & Docker Compose
-- Node.js 18+ (for frontend)
 
-### 1. Clone and Setup
+- **Java** 17+
+- **Maven** 3.8+
+- **Docker** & Docker Compose
+- **Node.js** 18+ *(optional — for frontend)*
+
+### 1. Clone the Repository
+
 ```bash
-git clone <repository-url>
-cd ai-devops-platform
-
-# Copy environment template
-cp .env.example .env
-# Edit .env with your configuration
+git clone https://github.com/vikram583135/CloudSentry.git
+cd CloudSentry
 ```
 
-### 2. Start Infrastructure
+### 2. Configure Environment
+
 ```bash
-# Start PostgreSQL, Redis, Kafka
+# Copy the environment template
+cp .env.example .env
+
+# Edit .env with your configuration (database, Redis, Kafka, JWT secret, etc.)
+```
+
+### 3. Start Infrastructure Services
+
+```bash
+# Start PostgreSQL, Redis, and Kafka using Docker Compose
 docker-compose -f docker/docker-compose.yml up -d
 
-# Wait for services to be healthy
+# Verify all services are healthy
 docker-compose -f docker/docker-compose.yml ps
 ```
 
-### 3. Run the Application
+### 4. Run the Application
+
 ```bash
 # Development mode
 ./mvnw spring-boot:run -Dspring-boot.run.profiles=dev
 
-# Or build and run
+# Or build and run the JAR
 ./mvnw clean package -DskipTests
 java -jar target/ai-devops-platform-1.0.0-SNAPSHOT.jar
 ```
 
-### 4. Access
-- **API**: http://localhost:8080
-- **Swagger UI**: http://localhost:8080/swagger-ui.html
-- **Kafka UI**: http://localhost:8090 (development only)
+### 5. Access the Platform
+
+| Service | URL |
+|---------|-----|
+| **REST API** | `http://localhost:8080` |
+| **Swagger UI** | `http://localhost:8080/swagger-ui.html` |
+| **Kafka UI** | `http://localhost:8090` *(dev only)* |
+
+---
 
 ## 📚 API Documentation
 
+All API endpoints are prefixed with `/api/v1`. Full interactive docs are available at **Swagger UI** when the application is running.
+
 ### Authentication
+
 ```bash
-# Register
+# Register a new user
 curl -X POST http://localhost:8080/api/v1/auth/register \
   -H "Content-Type: application/json" \
   -d '{"name":"John Doe","email":"john@example.com","password":"password123"}'
 
-# Login
+# Login and receive JWT tokens
 curl -X POST http://localhost:8080/api/v1/auth/login \
   -H "Content-Type: application/json" \
   -d '{"email":"john@example.com","password":"password123"}'
 ```
 
-### Using JWT Token
+### Authenticated Requests
+
 ```bash
-# Include token in requests
+# Include the JWT token in the Authorization header
 curl http://localhost:8080/api/v1/metrics \
   -H "Authorization: Bearer <your-access-token>"
 ```
 
-## 🧪 Testing
+### Key API Endpoints
 
-```bash
-# Unit tests
-./mvnw test
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `POST` | `/api/v1/auth/register` | Register a new user |
+| `POST` | `/api/v1/auth/login` | Authenticate and get JWT tokens |
+| `GET` | `/api/v1/metrics` | Retrieve system metrics |
+| `POST` | `/api/v1/metrics` | Ingest new metrics data |
+| `GET` | `/api/v1/incidents` | List all incidents |
+| `POST` | `/api/v1/incidents` | Create/manage incidents |
+| `GET` | `/api/v1/cost/records` | Fetch cloud cost records |
+| `GET` | `/api/v1/cost/recommendations` | Get cost optimization recommendations |
+| `POST` | `/api/v1/rca/analyze` | Trigger root cause analysis |
+| `GET` | `/api/v1/dashboard/admin` | Admin dashboard data |
+| `GET` | `/api/v1/dashboard/sre` | SRE dashboard data |
+| `GET` | `/api/v1/dashboard/developer` | Developer dashboard data |
+| `GET` | `/api/v1/dashboard/manager` | Manager dashboard data |
 
-# Integration tests (requires Docker)
-./mvnw verify -Pintegration-test
-
-# Test coverage
-./mvnw jacoco:report
-```
+---
 
 ## 📁 Project Structure
 
 ```
-src/main/java/com/devops/platform/
-├── DevOpsPlatformApplication.java
-├── config/                 # Configuration classes
-│   ├── SecurityConfig.java
-│   ├── KafkaConfig.java
-│   ├── RedisConfig.java
-│   └── WebClientConfig.java
-├── auth/                   # Authentication module
-│   ├── controller/
-│   ├── service/
-│   ├── model/
-│   ├── repository/
-│   ├── security/
-│   └── dto/
-├── metrics/                # Metrics ingestion module
-├── analyzer/               # Anomaly detection module
-├── incident/               # Incident management module
-├── rootcause/              # AI root cause analysis
-├── cost/                   # Cloud cost analyzer
-├── notification/           # Alerting & notifications
-└── common/                 # Shared utilities
-    ├── dto/
-    └── exception/
+CloudSentry/
+├── .env.example                 # Environment variable template
+├── .gitignore
+├── pom.xml                      # Maven build configuration
+├── mvnw / mvnw.cmd              # Maven wrapper scripts
+├── docker/                      # Docker Compose files for infrastructure
+├── src/
+│   └── main/
+│       ├── java/com/devops/platform/
+│       │   ├── DevOpsPlatformApplication.java   # Main entry point
+│       │   │
+│       │   ├── config/          # Global configuration
+│       │   │   ├── SecurityConfig.java
+│       │   │   ├── KafkaConfig.java
+│       │   │   ├── RedisConfig.java
+│       │   │   └── WebClientConfig.java
+│       │   │
+│       │   ├── auth/            # 🔐 Authentication & Authorization (JWT)
+│       │   │   ├── controller/
+│       │   │   ├── service/
+│       │   │   ├── model/
+│       │   │   ├── repository/
+│       │   │   ├── security/
+│       │   │   └── dto/
+│       │   │
+│       │   ├── metrics/         # 📊 Metrics Ingestion Module
+│       │   ├── analyzer/        # 🔍 Anomaly Detection Engine
+│       │   ├── incident/        # 🚨 Incident Management
+│       │   ├── rca/             # 🧠 AI Root Cause Analysis
+│       │   ├── cost/            # 💰 Cloud Cost Analyzer
+│       │   ├── notification/    # 🔔 Notification Engine
+│       │   ├── dashboard/       # 📈 Role-Based Dashboards
+│       │   └── common/          # 🛠️ Shared DTOs & Exception Handling
+│       │       ├── dto/
+│       │       └── exception/
+│       │
+│       └── resources/
+│           ├── application.yml          # Default configuration
+│           ├── application-dev.yml      # Dev profile
+│           └── application-prod.yml     # Production profile
+└── target/                      # Build output (gitignored)
 ```
+
+---
 
 ## 🔧 Configuration
 
 ### Environment Variables
 
+Copy `.env.example` to `.env` and configure the following:
+
 | Variable | Description | Default |
 |----------|-------------|---------|
-| `DB_HOST` | PostgreSQL host | localhost |
-| `DB_PORT` | PostgreSQL port | 5432 |
-| `DB_NAME` | Database name | devops_platform |
-| `DB_USERNAME` | Database user | devops_user |
-| `DB_PASSWORD` | Database password | devops_password |
-| `REDIS_HOST` | Redis host | localhost |
-| `REDIS_PORT` | Redis port | 6379 |
-| `KAFKA_BOOTSTRAP_SERVERS` | Kafka servers | localhost:9092 |
-| `JWT_SECRET` | JWT signing key | (required) |
-| `AWS_ACCESS_KEY_ID` | AWS access key | (optional) |
-| `AWS_SECRET_ACCESS_KEY` | AWS secret key | (optional) |
-| `OPENAI_API_KEY` | OpenAI API key | (optional) |
+| `DB_HOST` | PostgreSQL host | `localhost` |
+| `DB_PORT` | PostgreSQL port | `5432` |
+| `DB_NAME` | Database name | `devops_platform` |
+| `DB_USERNAME` | Database user | `devops_user` |
+| `DB_PASSWORD` | Database password | `devops_password` |
+| `REDIS_HOST` | Redis host | `localhost` |
+| `REDIS_PORT` | Redis port | `6379` |
+| `REDIS_PASSWORD` | Redis password | `redis_password` |
+| `KAFKA_BOOTSTRAP_SERVERS` | Kafka servers | `localhost:9092` |
+| `JWT_SECRET` | JWT signing key *(min 32 chars)* | *(required)* |
+| `AWS_ACCESS_KEY_ID` | AWS access key | *(optional)* |
+| `AWS_SECRET_ACCESS_KEY` | AWS secret key | *(optional)* |
+| `OPENAI_API_KEY` | OpenAI API key for AI RCA | *(optional)* |
+| `MAIL_HOST` | SMTP server host | `smtp.gmail.com` |
+| `MAIL_PORT` | SMTP server port | `587` |
+| `SLACK_WEBHOOK_URL` | Slack webhook URL | *(optional)* |
+| `SPRING_PROFILES_ACTIVE` | Active Spring profile | `dev` |
+
+### Application Profiles
+
+| Profile | Purpose |
+|---------|---------|
+| `dev` | Local development with relaxed security and verbose logging |
+| `prod` | Production-ready configuration with strict security |
+
+---
+
+## 🧪 Testing
+
+```bash
+# Run unit tests
+./mvnw test
+
+# Run integration tests (requires Docker for Testcontainers)
+./mvnw verify -Pintegration-test
+
+# Generate test coverage report
+./mvnw jacoco:report
+# Report available at: target/site/jacoco/index.html
+```
+
+---
 
 ## 🤝 Contributing
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+Contributions are welcome! Please follow these steps:
+
+1. **Fork** the repository — [CloudSentry on GitHub](https://github.com/vikram583135/CloudSentry)
+2. **Create** a feature branch
+   ```bash
+   git checkout -b feature/amazing-feature
+   ```
+3. **Commit** your changes
+   ```bash
+   git commit -m "feat: add amazing feature"
+   ```
+4. **Push** to your branch
+   ```bash
+   git push origin feature/amazing-feature
+   ```
+5. **Open** a Pull Request
+
+---
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
+
+---
 
 ## 🙏 Acknowledgments
 
-- Spring Boot team for the excellent framework
-- Apache Kafka for reliable message streaming
-- Confluent for Kafka ecosystem tools
+- [Spring Boot](https://spring.io/projects/spring-boot) — for the robust application framework
+- [Apache Kafka](https://kafka.apache.org/) — for reliable real-time message streaming
+- [PostgreSQL](https://www.postgresql.org/) — for the powerful relational database
+- [Redis](https://redis.io/) — for high-performance caching
+- [AWS SDK](https://aws.amazon.com/sdk-for-java/) — for cloud cost analysis integration
+
+---
+
+<p align="center">
+  Made with ❤️ by <a href="https://github.com/vikram583135">vikram583135</a>
+</p>
