@@ -8,7 +8,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import com.devops.platform.auth.security.UserPrincipal;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -49,10 +51,10 @@ public class DashboardController {
     @GetMapping("/developer")
     @PreAuthorize("hasAnyRole('ADMIN', 'DEVELOPER')")
     @Operation(summary = "Get Developer dashboard", description = "Application health and performance for developers")
-    public ResponseEntity<ApiResponse<DeveloperDashboard>> getDeveloperDashboard() {
+    public ResponseEntity<ApiResponse<DeveloperDashboard>> getDeveloperDashboard(
+            @AuthenticationPrincipal UserPrincipal userDetails) {
         log.info("Fetching developer dashboard");
-        // Would get userId from SecurityContext in production
-        UUID userId = UUID.randomUUID();
+        UUID userId = userDetails.getId();
         DeveloperDashboard dashboard = developerDashboardService.getDashboard(userId);
         return ResponseEntity.ok(ApiResponse.success(dashboard));
     }
@@ -68,10 +70,9 @@ public class DashboardController {
 
     @GetMapping("/my")
     @Operation(summary = "Get dashboard for current user", description = "Returns appropriate dashboard based on user role")
-    public ResponseEntity<ApiResponse<Object>> getMyDashboard() {
-        // In production, would check user's role from SecurityContext
-        // For now, return developer dashboard as default
-        UUID userId = UUID.randomUUID();
+    public ResponseEntity<ApiResponse<Object>> getMyDashboard(
+            @AuthenticationPrincipal UserPrincipal userDetails) {
+        UUID userId = userDetails.getId();
         DeveloperDashboard dashboard = developerDashboardService.getDashboard(userId);
         return ResponseEntity.ok(ApiResponse.success(dashboard));
     }

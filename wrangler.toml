@@ -1,0 +1,13 @@
+# ==============================================================================
+# Cloudflare Pages / Workers Configuration for CloudSentry
+# ==============================================================================
+
+name = "cloudsentry"
+compatibility_date = "2024-09-23"
+pages_build_output_dir = "src/main/resources/static"
+
+# Environment variables
+[vars]
+ENVIRONMENT = "production"
+PLATFORM = "CloudSentry Observability Platform"
+# API_BACKEND_URL = "https://api.yourdomain.com"

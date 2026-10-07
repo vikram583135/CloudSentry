@@ -46,6 +46,13 @@ public class SecurityConfig {
 
     // Public endpoints that don't require authentication
     private static final String[] PUBLIC_ENDPOINTS = {
+            "/",
+            "/index.html",
+            "/styles.css",
+            "/app.js",
+            "/favicon.ico",
+            "/assets/**",
+            "/static/**",
             "/api/v1/auth/**",
             "/api/v1/health",
             "/actuator/health",
@@ -76,11 +83,11 @@ public class SecurityConfig {
                         // Admin only endpoints
                         .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
                         // SRE endpoints
-                        .requestMatchers("/api/v1/incidents/**").hasAnyRole("ADMIN", "SRE")
+                        .requestMatchers("/api/v1/incidents/**").hasAnyRole("ADMIN", "SRE", "DEVELOPER")
                         .requestMatchers("/api/v1/alerts/**").hasAnyRole("ADMIN", "SRE")
                         // Cost endpoints for managers
-                        .requestMatchers(HttpMethod.GET, "/api/v1/cost/**").hasAnyRole("ADMIN", "SRE", "MANAGER")
-                        .requestMatchers("/api/v1/cost/**").hasAnyRole("ADMIN", "SRE")
+                        .requestMatchers(HttpMethod.GET, "/api/v1/costs/**").hasAnyRole("ADMIN", "SRE", "MANAGER")
+                        .requestMatchers("/api/v1/costs/**").hasAnyRole("ADMIN", "SRE")
                         // All other endpoints require authentication
                         .anyRequest().authenticated()
                 )

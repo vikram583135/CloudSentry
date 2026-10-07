@@ -10,6 +10,9 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import com.devops.platform.incident.event.IncidentCreatedEvent;
+import com.devops.platform.incident.event.IncidentStatusChangedEvent;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,6 +34,7 @@ public class IncidentService {
     private final IncidentTimelineRepository timelineRepository;
     private final CustomMetricsService customMetricsService;
     private final ObjectMapper objectMapper;
+    private final ApplicationEventPublisher eventPublisher;
 
     /**
      * Creates a new incident manually.
@@ -71,6 +75,10 @@ public class IncidentService {
         customMetricsService.incrementCounter("incidents.created");
 
         log.info("Created incident: number={}, severity={}", incident.getIncidentNumber(), incident.getSeverity());
+
+        // Publish domain event to trigger automated RCA analysis and multi-channel notifications
+        eventPublisher.publishEvent(new IncidentCreatedEvent(this, incident));
+
         return toResponse(incident);
     }
 
@@ -228,6 +236,10 @@ public class IncidentService {
 
         incident = incidentRepository.save(incident);
         log.info("Incident status updated: id={}, {} -> {}", id, oldStatus, newStatus);
+
+        // Publish domain event for notification and audit tracking across modular monolith
+        eventPublisher.publishEvent(new IncidentStatusChangedEvent(this, incident, oldStatus, newStatus, userId, comment));
+
         return toResponse(incident);
     }
 

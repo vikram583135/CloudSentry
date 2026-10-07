@@ -6,6 +6,8 @@ import com.devops.platform.incident.model.*;
 import com.devops.platform.incident.repository.IncidentRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import com.devops.platform.incident.event.IncidentCreatedEvent;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,7 +23,7 @@ import java.util.UUID;
 public class IncidentAutoCreationService {
 
     private final IncidentRepository incidentRepository;
-    private final IncidentService incidentService;
+    private final ApplicationEventPublisher eventPublisher;
 
     /**
      * Creates an incident from an anomaly if appropriate.
@@ -72,6 +74,9 @@ public class IncidentAutoCreationService {
 
         log.info("Auto-created incident {} from anomaly {}: severity={}",
                 incident.getIncidentNumber(), anomaly.getId(), severity);
+
+        // Publish domain event for automated RCA analysis and multi-channel alerting
+        eventPublisher.publishEvent(new IncidentCreatedEvent(this, incident));
 
         return incident;
     }

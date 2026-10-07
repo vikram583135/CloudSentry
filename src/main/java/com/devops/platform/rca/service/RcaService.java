@@ -57,9 +57,12 @@ public class RcaService {
         Incident incident = incidentRepository.findById(incidentId)
                 .orElseThrow(() -> new ResourceNotFoundException("Incident", "id", incidentId));
 
-        // If incident was triggered by anomaly, analyze that
+        // If incident was triggered by anomaly, analyze that with incident context
         if (incident.getTriggeredByAnomalyId() != null) {
-            return analyzeAnomaly(incident.getTriggeredByAnomalyId());
+            Anomaly anomaly = anomalyRepository.findById(incident.getTriggeredByAnomalyId()).orElse(null);
+            if (anomaly != null) {
+                return performAnalysis(anomaly, incident);
+            }
         }
 
         // Otherwise, create a synthetic analysis

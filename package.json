@@ -1,0 +1,24 @@
+{
+  "name": "cloudsentry-platform",
+  "version": "1.0.0",
+  "private": true,
+  "description": "CloudSentry — AI-Powered Smart DevOps Incident & Cost Optimization Platform",
+  "scripts": {
+    "deploy:cloudflare": "wrangler pages deploy src/main/resources/static --project-name cloudsentry",
+    "deploy:prod": "wrangler pages deploy src/main/resources/static --project-name cloudsentry --branch main",
+    "preview": "wrangler pages dev src/main/resources/static",
+    "test:health": "node -e \"fetch('http://localhost:3000').then(r=>console.log('HTTP',r.status))\""
+  },
+  "devDependencies": {
+    "wrangler": "^3.80.0"
+  },
+  "keywords": [
+    "observability",
+    "devops",
+    "sre",
+    "incidents",
+    "cloudflare-pages"
+  ],
+  "author": "vikram583135",
+  "license": "MIT"
+}

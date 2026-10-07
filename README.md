@@ -27,6 +27,7 @@
 - [Architecture](#️-architecture)
 - [Tech Stack](#-tech-stack)
 - [Getting Started](#-getting-started)
+- [Deploying to Cloudflare](#-deploying-to-cloudflare-pages--edge)
 - [API Documentation](#-api-documentation)
 - [Project Structure](#-project-structure)
 - [Configuration](#-configuration)
@@ -165,9 +166,56 @@ java -jar target/ai-devops-platform-1.0.0-SNAPSHOT.jar
 
 | Service | URL |
 |---------|-----|
+| **Web Console (UI)** | `http://localhost:8080/` |
 | **REST API** | `http://localhost:8080` |
 | **Swagger UI** | `http://localhost:8080/swagger-ui.html` |
 | **Kafka UI** | `http://localhost:8090` *(dev only)* |
+
+---
+
+## ⚡ Deploying to Cloudflare (Pages & Edge)
+
+CloudSentry's Observability Web Console and Edge Functions can be deployed globally to **Cloudflare Pages** in under 60 seconds with zero server management.
+
+### Method 1: 1-Click CLI Deployment (Wrangler)
+
+```powershell
+# On Windows PowerShell
+.\deploy-cloudflare.ps1
+```
+
+```bash
+# On Linux / macOS
+chmod +x deploy-cloudflare.sh
+./deploy-cloudflare.sh
+```
+
+Or using `npx` directly:
+```bash
+# Authenticate (first time only)
+npx wrangler login
+
+# Deploy static web console + edge functions
+npx wrangler pages deploy src/main/resources/static --project-name cloudsentry
+```
+
+### Method 2: Automated GitHub Actions CI/CD
+
+1. Go to your repository **Settings > Secrets and variables > Actions**.
+2. Add the following repository secrets:
+   - `CLOUDFLARE_API_TOKEN`: Created in your Cloudflare dashboard with *Cloudflare Pages Edit* permissions.
+   - `CLOUDFLARE_ACCOUNT_ID`: Found in your Cloudflare dashboard URL or Workers & Pages overview.
+3. Every push to `main` or `master` will automatically build and deploy via [`.github/workflows/deploy-cloudflare.yml`](.github/workflows/deploy-cloudflare.yml).
+
+### Method 3: Cloudflare Dashboard (Git Integration)
+
+1. Open [Cloudflare Pages Dashboard](https://dash.cloudflare.com/?to=/:account/pages).
+2. Click **Create an application** > **Pages** > **Connect to Git**.
+3. Select this repository and use the following build settings:
+   - **Framework preset**: None
+   - **Build command**: `./mvnw clean package -DskipTests` *(or leave blank)*
+   - **Build output directory**: `src/main/resources/static`
+4. *(Optional)* Under **Settings > Environment variables**, add `API_BACKEND_URL` pointing to your deployed Spring Boot API cluster (e.g., `https://api.cloudsentry.dev`) to enable the edge proxy.
 
 ---
 

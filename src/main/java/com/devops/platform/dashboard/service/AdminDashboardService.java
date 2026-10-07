@@ -3,6 +3,7 @@ package com.devops.platform.dashboard.service;
 import com.devops.platform.analyzer.model.AnomalySeverity;
 import com.devops.platform.analyzer.model.AnomalyStatus;
 import com.devops.platform.analyzer.repository.AnomalyRepository;
+import com.devops.platform.auth.model.Role;
 import com.devops.platform.auth.repository.UserRepository;
 import com.devops.platform.cost.model.ResourceStatus;
 import com.devops.platform.cost.repository.CloudResourceRepository;
@@ -85,10 +86,10 @@ public class AdminDashboardService {
         long totalUsers = userRepository.count();
 
         Map<String, Long> byRole = new HashMap<>();
-        byRole.put("ADMIN", userRepository.countByRole("ADMIN"));
-        byRole.put("SRE", userRepository.countByRole("SRE"));
-        byRole.put("DEVELOPER", userRepository.countByRole("DEVELOPER"));
-        byRole.put("MANAGER", userRepository.countByRole("MANAGER"));
+        byRole.put("ADMIN", userRepository.countByRole(Role.ADMIN));
+        byRole.put("SRE", userRepository.countByRole(Role.SRE));
+        byRole.put("DEVELOPER", userRepository.countByRole(Role.DEVELOPER));
+        byRole.put("MANAGER", userRepository.countByRole(Role.MANAGER));
 
         return AdminDashboard.UserStats.builder()
                 .totalUsers(totalUsers)

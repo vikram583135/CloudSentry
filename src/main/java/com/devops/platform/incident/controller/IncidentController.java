@@ -15,7 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
+import com.devops.platform.auth.security.UserPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,11 +39,10 @@ public class IncidentController {
     @Operation(summary = "Create incident", description = "Creates a new incident manually")
     public ResponseEntity<ApiResponse<IncidentResponse>> createIncident(
             @Valid @RequestBody IncidentCreateRequest request,
-            @AuthenticationPrincipal UserDetails userDetails) {
+            @AuthenticationPrincipal UserPrincipal userDetails) {
 
         log.info("Creating incident: title={}, severity={}", request.getTitle(), request.getSeverity());
-        // In real implementation, extract user ID from userDetails
-        UUID reporterId = UUID.randomUUID(); // Placeholder
+        UUID reporterId = userDetails.getId();
         IncidentResponse response = incidentService.createIncident(request, reporterId);
 
         return ResponseEntity.status(HttpStatus.CREATED)
@@ -93,10 +92,10 @@ public class IncidentController {
     public ResponseEntity<ApiResponse<IncidentResponse>> updateIncident(
             @Parameter(description = "Incident ID") @PathVariable UUID id,
             @Valid @RequestBody IncidentUpdateRequest request,
-            @AuthenticationPrincipal UserDetails userDetails) {
+            @AuthenticationPrincipal UserPrincipal userDetails) {
 
         log.info("Updating incident: id={}", id);
-        UUID userId = UUID.randomUUID(); // Placeholder
+        UUID userId = userDetails.getId();
         IncidentResponse response = incidentService.updateIncident(id, request, userId);
 
         return ResponseEntity.ok(ApiResponse.success(response, "Incident updated"));
@@ -109,10 +108,10 @@ public class IncidentController {
             @Parameter(description = "Incident ID") @PathVariable UUID id,
             @Parameter(description = "New status") @PathVariable IncidentStatus status,
             @RequestParam(required = false) String comment,
-            @AuthenticationPrincipal UserDetails userDetails) {
+            @AuthenticationPrincipal UserPrincipal userDetails) {
 
         log.info("Updating incident status: id={}, status={}", id, status);
-        UUID userId = UUID.randomUUID(); // Placeholder
+        UUID userId = userDetails.getId();
         IncidentResponse response = incidentService.updateStatus(id, status, userId, comment);
 
         return ResponseEntity.ok(ApiResponse.success(response, "Status updated to " + status));
@@ -123,9 +122,9 @@ public class IncidentController {
     @Operation(summary = "Acknowledge incident")
     public ResponseEntity<ApiResponse<IncidentResponse>> acknowledge(
             @Parameter(description = "Incident ID") @PathVariable UUID id,
-            @AuthenticationPrincipal UserDetails userDetails) {
+            @AuthenticationPrincipal UserPrincipal userDetails) {
 
-        UUID userId = UUID.randomUUID();
+        UUID userId = userDetails.getId();
         IncidentResponse response = incidentService.updateStatus(id, IncidentStatus.ACKNOWLEDGED, userId,
                 "Incident acknowledged");
         return ResponseEntity.ok(ApiResponse.success(response, "Incident acknowledged"));
@@ -136,9 +135,9 @@ public class IncidentController {
     @Operation(summary = "Start investigation")
     public ResponseEntity<ApiResponse<IncidentResponse>> investigate(
             @Parameter(description = "Incident ID") @PathVariable UUID id,
-            @AuthenticationPrincipal UserDetails userDetails) {
+            @AuthenticationPrincipal UserPrincipal userDetails) {
 
-        UUID userId = UUID.randomUUID();
+        UUID userId = userDetails.getId();
         IncidentResponse response = incidentService.updateStatus(id, IncidentStatus.INVESTIGATING, userId,
                 "Investigation started");
         return ResponseEntity.ok(ApiResponse.success(response, "Investigation started"));
@@ -150,9 +149,9 @@ public class IncidentController {
     public ResponseEntity<ApiResponse<IncidentResponse>> resolve(
             @Parameter(description = "Incident ID") @PathVariable UUID id,
             @RequestParam(required = false) String resolution,
-            @AuthenticationPrincipal UserDetails userDetails) {
+            @AuthenticationPrincipal UserPrincipal userDetails) {
 
-        UUID userId = UUID.randomUUID();
+        UUID userId = userDetails.getId();
         String comment = resolution != null ? "Resolved: " + resolution : "Incident resolved";
         IncidentResponse response = incidentService.updateStatus(id, IncidentStatus.RESOLVED, userId, comment);
         return ResponseEntity.ok(ApiResponse.success(response, "Incident resolved"));
@@ -163,9 +162,9 @@ public class IncidentController {
     @Operation(summary = "Close incident", description = "Closes incident after post-mortem")
     public ResponseEntity<ApiResponse<IncidentResponse>> close(
             @Parameter(description = "Incident ID") @PathVariable UUID id,
-            @AuthenticationPrincipal UserDetails userDetails) {
+            @AuthenticationPrincipal UserPrincipal userDetails) {
 
-        UUID userId = UUID.randomUUID();
+        UUID userId = userDetails.getId();
         IncidentResponse response = incidentService.updateStatus(id, IncidentStatus.CLOSED, userId, "Incident closed");
         return ResponseEntity.ok(ApiResponse.success(response, "Incident closed"));
     }
@@ -176,10 +175,10 @@ public class IncidentController {
     public ResponseEntity<ApiResponse<TimelineEntryResponse>> addComment(
             @Parameter(description = "Incident ID") @PathVariable UUID id,
             @RequestBody Map<String, String> body,
-            @AuthenticationPrincipal UserDetails userDetails) {
+            @AuthenticationPrincipal UserPrincipal userDetails) {
 
         String comment = body.get("comment");
-        UUID userId = UUID.randomUUID();
+        UUID userId = userDetails.getId();
         String userName = userDetails != null ? userDetails.getUsername() : "Unknown";
 
         TimelineEntryResponse response = incidentService.addComment(id, comment, userId, userName);

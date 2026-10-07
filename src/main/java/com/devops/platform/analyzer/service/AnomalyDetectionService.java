@@ -8,8 +8,10 @@ import com.devops.platform.analyzer.repository.AnomalyRepository;
 import com.devops.platform.analyzer.repository.ThresholdConfigRepository;
 import com.devops.platform.metrics.model.Metric;
 import com.devops.platform.metrics.model.MetricType;
-import com.devops.platform.metrics.repository.MetricRepository;
 import com.devops.platform.metrics.service.CustomMetricsService;
+import com.devops.platform.metrics.repository.MetricRepository;
+import com.devops.platform.analyzer.event.AnomalyDetectedEvent;
+import org.springframework.context.ApplicationEventPublisher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
@@ -38,6 +40,7 @@ public class AnomalyDetectionService {
     private final MovingAverageDetector movingAverageDetector;
     private final RateOfChangeDetector rateOfChangeDetector;
     private final CustomMetricsService customMetricsService;
+    private final ApplicationEventPublisher eventPublisher;
 
     /**
      * Analyzes a metric for anomalies using all applicable detection methods.
@@ -225,6 +228,9 @@ public class AnomalyDetectionService {
         log.info("Anomaly detected: id={}, app={}, type={}, severity={}",
                 anomaly.getId(), anomaly.getApplicationId(),
                 anomaly.getMetricType(), anomaly.getSeverity());
+
+        // Publish domain event for decoupled incident auto-creation and alerts
+        eventPublisher.publishEvent(new AnomalyDetectedEvent(this, anomaly));
 
         return anomaly;
     }
