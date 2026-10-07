@@ -3,7 +3,16 @@
 # ==============================================================================
 
 name = "cloudsentry"
+main = "worker.js"
 compatibility_date = "2024-09-23"
+
+# Static Assets for Cloudflare Workers
+[assets]
+directory = "src/main/resources/static"
+binding = "ASSETS"
+not_found_handling = "single-page-application"
+
+# Static Output for Cloudflare Pages
 pages_build_output_dir = "src/main/resources/static"
 
 # Environment variables
