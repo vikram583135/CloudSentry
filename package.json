@@ -12,7 +12,7 @@
     "test:health": "node -e \"fetch('http://localhost:3000').then(r=>console.log('HTTP',r.status))\""
   },
   "devDependencies": {
-    "wrangler": "^3.80.0"
+    "wrangler": "^4.0.0"
   },
   "keywords": [
     "observability",
